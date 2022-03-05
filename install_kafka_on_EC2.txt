@@ -11,7 +11,7 @@ cd kafka_2.12-2.2.0
 
 ##### >>>> To acess from outside<<<<<<<<
 sudo vi config/server.properties
-listeners=PLAINTEXT://<ip_or_dns>:9092
+listeners=PLAINTEXT://ec2-54-220-17-121.eu-west-1.compute.amazonaws.com:9092
 sudo nohup bin/zookeeper-server-start.sh config/zookeeper.properties > ~/zookeeper-logs &
 ctrl+d / ctrl+c
 
@@ -20,9 +20,10 @@ ctrl+d / ctrl+c
 
 ### >>>Create a Topic<<<
 sudo bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-sudo bin/kafka-topics.sh --list --zookeeper <ip_or_dns>:2181
+sudo bin/kafka-topics.sh --list --zookeeper ec2-54-220-17-121.eu-west-1.compute.amazonaws.com:2181
 
-sudo bin/kafka-console-producer.sh --broker-list <ip_or_dns>:9092 --topic test
+sudo bin/kafka-console-producer.sh --broker-list ec2-54-220-17-121.eu-west-1.compute.amazonaws.com:9092 --topic test
+sudo bin/kafka-console-consumer.sh --topic test --from-beginning --bootstrap-server ec2-54-220-17-121.eu-west-1.compute.amazonaws.com:9092
 
 # Troubleshooting - Once Spark Job starts reading data from a topic, you should see a message like "Adding new member consumer-"
 # If not, check IP whitelisting
